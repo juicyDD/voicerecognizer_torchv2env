@@ -1,6 +1,6 @@
 import requests
 
-URL = "http://127.0.0.1:5000/embedding"
+URL = "https://juicydd-voice-embedding-api.herokuapp.com/embedding"
 TEST_AUDIO_FILE_PATH = "D:/SpeechDataset/test/LibriSpeech/test-clean/1995/1837/1995-1837-0009.flac"
 
 if __name__ == "__main__":
