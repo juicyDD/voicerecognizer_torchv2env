@@ -1,9 +1,12 @@
 import torch
+import os
 import multiprocessing
 TRAIN_DATASET_DIR = r"D:\SpeechDataset\train\train-clean-100" #train-clean-100 of LibriSpeech has 251 different speakers
 TEST_DATASET_DIR = r"D:\SpeechDataset\test\LibriSpeech\test-clean"
-SAVED_MODEL_PATH = r"models\saved_model.pt"
-# SAVED_MODEL_PATH = r"C:\Users\DELL\Desktop\DATN\sample\SpeakerRecognitionFromScratch\saved_model\pretrained\saved_model.bilstm.mean.clean100.specaug.gpu100000.pt"
+
+
+SAVED_MODEL_PATH = '/app/models/saved_model.pt'
+# SAVED_MODEL_PATH = "models\saved_model.pt"
 
 N_MFCC = 40
 
@@ -28,7 +31,7 @@ BATCH_SIZE = 8
 LEARNING_RATE = 0.0001
 
 # Whether to use GPU or CPU.
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+DEVICE = torch.device("cpu") #"cuda:0" if torch.cuda.is_available() else 
 
 #hidden states vs hidden layers: https://stackoverflow.com/questions/63294347/difference-between-hidden-dimension-and-n-layers-in-rnn-using-pytorch 
 # Hidden size of LSTM layers.

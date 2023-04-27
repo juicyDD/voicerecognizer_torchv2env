@@ -47,7 +47,7 @@ class TripletScoreFetcher:
 """Triplet loss from 1*(a|p|n) triplet"""
 def get_triplet_loss_from_single_triplet(anchor, pos, neg): 
     cos = nn.CosineSimilarity(dim=-1, eps=1e-6)
-    return torch.max(cos(anchor, neg) - cos(anchor, pos) + nhi_config.TRIPLET_ALPHA, torch.tensor(0.0).to('cuda'))
+    return torch.max(cos(anchor, neg) - cos(anchor, pos) + nhi_config.TRIPLET_ALPHA, torch.tensor(0.0).to('cpu'))
 
 
 '''Triplet loss from N*(a|p|n) triplets'''
@@ -122,11 +122,11 @@ if __name__ == "__main__":
     # run_training()
     tempdir = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0004.flac"
     temp = features_extraction.extract_mfcc(tempdir)
-    encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
-    # encoder = MyEncoder().encoder
+    # encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
+    encoder = MyEncoder().encoder
     embedding_temp = my_inference(temp, encoder)
     
-    tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0003.flac"
+    tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\2830\3980\2830-3980-0008.flac"
     temp2 = features_extraction.extract_mfcc(tempdir2)
     embedding_temp2 = my_inference(temp2, encoder)
     

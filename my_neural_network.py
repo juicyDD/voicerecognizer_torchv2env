@@ -8,7 +8,7 @@ import nhi_config
 
 class PretrainedEncoder(nn.Module):
     def load_pretrained(self, saved_model):
-        my_state_dict = torch.load(saved_model) #, map_location=nhi_config.DEVICE
+        my_state_dict = torch.load(saved_model, map_location=nhi_config.DEVICE) #, map_location=nhi_config.DEVICE
         self.load_state_dict(my_state_dict["encoder_state_dict"])
       
 #LONG SHORT-TERM MEMORY MODEL
@@ -84,8 +84,8 @@ class Singleton(type): #use singleton to get encoder(model) ONCE
         return cls._instances[cls]
     
 class MyEncoder(metaclass=Singleton):
-    def __init__(self, saved_model=""):
-        if nhi_config.USE_TRANSFORMER:
+    def __init__(self, saved_model=nhi_config.SAVED_MODEL_PATH):
+        if nhi_config.USE_TRANSFORMER == True:
             self.encoder = TransformerSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
         else:
             self.encoder = LstmSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
