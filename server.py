@@ -19,8 +19,8 @@ def embedding():
     audio_file.save(file_name)
     
     features = features_extraction.extract_mfcc(file_name)
-    # encoder = my_neural_network.get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
-    encoder = my_neural_network.MyEncoder().encoder
+    encoder = my_neural_network.get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
+    # encoder = my_neural_network.MyEncoder().encoder
     embedding = inference.my_inference(features, encoder)
     result = pd.Series(embedding).to_json(orient='values')
     os.remove(file_name)

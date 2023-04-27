@@ -70,9 +70,7 @@ class TransformerSpeakerEncoder(PretrainedEncoder):
 
 
 
-def get_speaker_encoder(self, saved_model=""): #function to get encoder(model)
-    if self.encoder is not None:
-        return self.encoder
+def get_speaker_encoder(saved_model=""): #function to get encoder(model)
     if nhi_config.USE_TRANSFORMER:
         return TransformerSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
     else:

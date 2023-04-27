@@ -70,8 +70,8 @@ def save_model(saved_model_path, encoder, losses, start_time):
 def train_network(spk_to_utts, num_steps, saved_model=None, pool=None):
     start_time = time.time()
     losses = []
-    # encoder = get_speaker_encoder()
-    encoder = MyEncoder().encoder
+    encoder = get_speaker_encoder()
+    # encoder = MyEncoder().encoder
 
     # Train
     optimizer = optim.Adam(encoder.parameters(), lr=nhi_config.LEARNING_RATE)
@@ -122,8 +122,8 @@ if __name__ == "__main__":
     # run_training()
     tempdir = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0004.flac"
     temp = features_extraction.extract_mfcc(tempdir)
-    # encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
-    encoder = MyEncoder().encoder
+    encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
+    # encoder = MyEncoder().encoder
     embedding_temp = my_inference(temp, encoder)
     
     tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0003.flac"

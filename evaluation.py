@@ -13,7 +13,6 @@ import nhi_config
 import data_prep
 from training import TripletScoreFetcher
 from my_neural_network import get_speaker_encoder
-from my_neural_network import MyEncoder
 
 def FRR(labels, scores, thres):
     #fn/(tp+fn)
@@ -106,8 +105,8 @@ def run_eval():
     spk_to_utts = data_prep.get_utterances_by_speakers(nhi_config.TEST_DATASET_DIR)
     print("Evaluation data:", nhi_config.TEST_DATASET_DIR)
     
-    # encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
-    encoder = MyEncoder().encoder
+    encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
+    # encoder = MyEncoder().encoder
     
     labels, scores = compute_scores(encoder, spk_to_utts, nhi_config.NUM_EVAL_TRIPLETS)
     
