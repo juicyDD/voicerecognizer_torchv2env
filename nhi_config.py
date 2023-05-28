@@ -4,10 +4,12 @@ import multiprocessing
 TRAIN_DATASET_DIR = r"D:\SpeechDataset\train\train-clean-100" #train-clean-100 of LibriSpeech has 251 different speakers
 TEST_DATASET_DIR = r"D:\SpeechDataset\test\LibriSpeech\test-clean"
 
+# PRETRAINED_MODEL = r"D:\DATN\currentcode_secondenvironment\models_transformer_mfcc_100k_specaug\saved_model.ckpt-100000.pt"
+PRETRAINED_MODEL =''
+# SAVED_MODEL_PATH = '/app/models/saved_model.pt'
 
-SAVED_MODEL_PATH = '/app/models/saved_model.pt'
+SAVED_MODEL_PATH = r"D:\DATN\currentcode_secondenvironment\models_lstm_mfcc_100k_specaug_batch_8\saved_model.ckpt-50000.pt"
 # SAVED_MODEL_PATH = "models\saved_model.pt"
-
 N_MFCC = 40
 
 SEQ_LENGTH = 100  #1 ele = 512 samples; 100~3.2 seconds
@@ -66,7 +68,7 @@ FULL_SEQUENCE_INFERENCE = False
 # Sliding window step for sliding window inference.
 SLIDING_WINDOW_STEP = 50  # 1.6 seconds
 
-NUM_EVAL_TRIPLETS = 1000
+NUM_EVAL_TRIPLETS = 10000
 
 # Triplet loss, Alpha hyperparam
 TRIPLET_ALPHA = 0.1

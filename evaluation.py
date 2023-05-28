@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import torch.optim as optim
 
 from inference import my_inference
-import features_extraction
 import multiprocessing
+import multiprocessing.pool 
 import nhi_config
 import data_prep
 from training import TripletScoreFetcher
@@ -128,3 +128,8 @@ if __name__ == "__main__":
 # Evaluated 10000 triplets in total
 # Finished evaluation in 2028.7074007987976 seconds
 # eer_threshold = 0.6300000000000004 eer = 0.08030000000000001
+
+#transformer
+# Evaluated 10000 triplets in total
+# Finished evaluation in 1642.729623556137 seconds
+# eer_threshold = 0.7900000000000006 eer = 0.1008

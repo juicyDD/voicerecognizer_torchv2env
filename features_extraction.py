@@ -18,7 +18,8 @@ def read_audio(audio_dir):
         
     # Convert to 16kHz.
     if sample_rate != 16000:
-        waveform = librosa.resample(waveform, sample_rate, 16000)
+        # print(sample_rate)
+        waveform = librosa.resample(waveform, orig_sr=sample_rate, target_sr=16000)
         sample_rate = 16000
     return waveform, sample_rate
     
@@ -43,9 +44,7 @@ def extract_sliding_windows(features):
 '''from a triplet of anchor, neg, pos utterances => extract mfcc of 3 utterances'''
 def get_triplet_mfcc(dict_speakers):
     anchor_utt, pos_utt, neg_utt = data_prep.get_triplet(dict_speakers)
-    return (extract_mfcc(anchor_utt),
-            extract_mfcc(pos_utt),
-            extract_mfcc(neg_utt))
+    return (extract_mfcc(anchor_utt), extract_mfcc(pos_utt), extract_mfcc(neg_utt))
 
 '''trim mfcc features to nhi_config.SEQ_LENGTH'''
 def trim_features(features, apply_specaug):

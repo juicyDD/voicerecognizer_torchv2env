@@ -58,7 +58,8 @@ class TransformerSpeakerEncoder(PretrainedEncoder):
             num_layers=1)
 
         if saved_model:
-            self._load_from(saved_model)
+            # self._load_from(saved_model)
+            self.load_pretrained(saved_model)
 
     def forward(self, x):
         encoder_input = torch.sigmoid(self.linear_layer(x))

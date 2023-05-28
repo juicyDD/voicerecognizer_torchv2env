@@ -5,12 +5,13 @@ import time
 import os
 import matplotlib.pyplot as plt
 import torch.optim as optim
-
+import json
 from inference import my_inference
 import features_extraction
 import multiprocessing
 import nhi_config
 import data_prep
+import json
 from my_neural_network import get_speaker_encoder, MyEncoder
 
 def cosine_similarity(x1,x2):
@@ -70,7 +71,7 @@ def save_model(saved_model_path, encoder, losses, start_time):
 def train_network(spk_to_utts, num_steps, saved_model=None, pool=None):
     start_time = time.time()
     losses = []
-    encoder = get_speaker_encoder()
+    encoder = get_speaker_encoder(saved_model=nhi_config.PRETRAINED_MODEL)
     # encoder = MyEncoder().encoder
 
     # Train
@@ -114,24 +115,36 @@ def run_training():
     print("Training data:", nhi_config.TRAIN_DATASET_DIR)
     with multiprocessing.Pool(nhi_config.NUM_PROCESSES) as pool:
         losses = train_network(spk_to_utts, nhi_config.TRAINING_STEPS, nhi_config.SAVED_MODEL_PATH, pool)
+        
+    # with open(r"D:\DATN\currentcode_secondenvironment\models_transformer\loss.json", 'wb') as outfile:
+    #     json.dump(losses, outfile)
+        output_loss_json(losses)
     plt.plot(losses)
     plt.xlabel("step")
     plt.ylabel("loss")
     plt.show()
+
+def output_loss_json(aList):
+    res = json.dumps(aList)
+    jsonFile = open("loss.json", "w")
+    jsonFile.write(res)
+    jsonFile.close()
 if __name__ == "__main__":
-    # run_training()
-    tempdir = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0004.flac"
-    temp = features_extraction.extract_mfcc(tempdir)
+    run_training()
+    # tempdir = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0004.flac"
+    # # tempdir=r"D:\DATN\myassistant\microphone-results2.flac"
+    # temp = features_extraction.extract_mfcc(tempdir)
     # encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
-    encoder = MyEncoder().encoder
-    embedding_temp = my_inference(temp, encoder)
+    # encoder = MyEncoder().encoder
+    # embedding_temp = my_inference(temp, encoder)
     
-    tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\2830\3980\2830-3980-0008.flac"
-    temp2 = features_extraction.extract_mfcc(tempdir2)
-    embedding_temp2 = my_inference(temp2, encoder)
+    # tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\2830\3980\2830-3980-0008.flac"
+    # # tempdir2=r"D:\DATN\myassistant\microphone-results.flac"
+    # temp2 = features_extraction.extract_mfcc(tempdir2)
+    # embedding_temp2 = my_inference(temp2, encoder)
     
     
-    print(embedding_temp)
-    print("shape: ", embedding_temp.shape)
-    print("cos similarity: ", cosine_similarity(embedding_temp, embedding_temp2))
+    # print(embedding_temp)
+    # print("shape: ", embedding_temp.shape)
+    # print("cos similarity: ", cosine_similarity(embedding_temp, embedding_temp2))
     
