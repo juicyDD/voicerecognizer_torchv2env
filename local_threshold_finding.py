@@ -5,6 +5,7 @@ import multiprocessing
 import multiprocessing.pool 
 import nhi_config
 import time
+import json
 from data_prep import get_utterances_by_speakers
 from my_neural_network import get_speaker_encoder
 from features_extraction import extract_mfcc
@@ -103,7 +104,7 @@ def compute_scores(encoder, pos_utts, neg_utts, speaker_id, num_eval_triplets=nh
                 
     print("Evaluated", len(labels)//2, "triplets in total")
     return (labels, scores)
-def run_eval_local_threshold(speaker_id='8555'):
+def find_local_threshold(speaker_id='8555'):
 
     start_time = time.time()
     # # spk_to_utts = get_utterances_by_speakers(nhi_config.TEST_DATASET_DIR)
@@ -117,5 +118,17 @@ def run_eval_local_threshold(speaker_id='8555'):
     eval_time = time.time() - start_time
     print("Finished evaluation in", eval_time, "seconds")
     print("eer_threshold =", eer_threshold, "eer =", eer)
+    return eer, eer_threshold
+    
+def find_local_threshold_for_all_test_speakers():
+    test_utts = get_utterances_by_speakers(nhi_config.TEST_DATASET_DIR)
+    result = {}
+    for k in list(test_utts.keys()):
+        eer, eer_threshold=find_local_threshold(speaker_id=k)
+        result[k] = {"err":eer, "thres": eer_threshold}
+    res = json.dumps(result)
+    jsonFile = open("eer_thres.json", "w")
+    jsonFile.write(res)
+    jsonFile.close()
 if __name__ == "__main__":
-    run_eval_local_threshold("8555")
+    find_local_threshold_for_all_test_speakers()
