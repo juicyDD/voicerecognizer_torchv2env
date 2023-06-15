@@ -51,8 +51,7 @@ class LstmSpeakerEncoder2(PretrainedEncoder):
         self.linear1 = nn.Linear(128, 128)
         self.linear2 = nn.Linear(128, 128)
 
-        self.linear_global = nn.Linear(128, 128)
-        
+        self.linear_pe = nn.Linear(128, 1)
         #--------- if there is a pretrained model, load it
         if saved_model:
             self.load_pretrained(saved_model)
@@ -75,10 +74,8 @@ class LstmSpeakerEncoder2(PretrainedEncoder):
         h_conc_linear1  = F.relu(self.linear1(y1))
         h_conc_linear2  = F.relu(self.linear2(y2))
         y =  y1 + y2 + h_conc_linear1 + h_conc_linear2
-        output = self.linear_global(y)
-        # output_global = self.linear_global(output.mean(1))
         # y = self.linear(y)
-        return self.join_frames(output)
+        return self.join_frames(y)
         
 class TransformerSpeakerEncoder(PretrainedEncoder):
     
@@ -112,7 +109,7 @@ def get_speaker_encoder(saved_model=""): #function to get encoder(model)
     if nhi_config.USE_TRANSFORMER:
         return TransformerSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
     else:
-        return LstmSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
+        return LstmSpeakerEncoder2(saved_model).to(nhi_config.DEVICE)
     
 class Singleton(type): #use singleton to get encoder(model) ONCE
     _instances = {}
@@ -126,7 +123,7 @@ class MyEncoder(metaclass=Singleton):
         if nhi_config.USE_TRANSFORMER == True:
             self.encoder = TransformerSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
         else:
-            self.encoder = LstmSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
+            self.encoder = LstmSpeakerEncoder2(saved_model).to(nhi_config.DEVICE)
     
 
 if __name__ == "__main__":

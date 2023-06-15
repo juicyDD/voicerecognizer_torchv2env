@@ -8,11 +8,11 @@ TEST_DATASET_DIR = r"D:\SpeechDataset\test\LibriSpeech\test-clean"
 PRETRAINED_MODEL =''
 # SAVED_MODEL_PATH = '/app/models/saved_model.pt'
 
-SAVED_MODEL_PATH = r"D:\DATN\currentcode_secondenvironment\models_lstm_mfcc_100k_specaug_batch_8\saved_model.ckpt-50000.pt"
+SAVED_MODEL_PATH = r"D:\DATN\currentcode_secondenvironment\models_lstm_mfcc_100k_specaug_batch_8\saved_model.ckpt-100000.pt"
 # SAVED_MODEL_PATH = "models\saved_model.pt"
 N_MFCC = 40
 
-SEQ_LENGTH = 100  #1 ele = 512 samples; 100~3.2 seconds
+SEQ_LENGTH = 100  #1 ele = 512 samples; 100~3.2 seconds/input
 
 # Whether we are going to train with SpecAugment
 SPECAUG_TRAINING = True
@@ -77,7 +77,7 @@ TRIPLET_ALPHA = 0.1
 EER_THRESHOLD_STEP = 0.001 
 
 # Training steps
-TRAINING_STEPS = 100000
+TRAINING_STEPS = 50000
 
 # Number of processes for multi-processing.
 NUM_PROCESSES = min(multiprocessing.cpu_count(), BATCH_SIZE)

@@ -36,12 +36,10 @@ class TripletScoreFetcher:
         
         if ((anchor_embedding is None) or (pos_embedding is None) or (neg_embedding is None)): # ----Some utterances might be smaller than a single sliding window.
             return ([], [])
-        triplet_labels = [1, 0]
-        triplet_scores = [
-            cosine_similarity(anchor_embedding, pos_embedding),
-            cosine_similarity(anchor_embedding, neg_embedding)]
+        _labels = [1, 0]
+        _scores = [cosine_similarity(anchor_embedding, pos_embedding),cosine_similarity(anchor_embedding, neg_embedding)]
         print("triplets evaluated:", i, "/", self.num_eval_triplets)
-        return (triplet_labels, triplet_scores)
+        return (_labels, _scores)
 
 
 
@@ -136,6 +134,7 @@ if __name__ == "__main__":
     # temp = features_extraction.extract_mfcc(tempdir)
     # encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
     # encoder = MyEncoder().encoder
+
     # embedding_temp = my_inference(temp, encoder)
     
     # tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\2830\3980\2830-3980-0008.flac"

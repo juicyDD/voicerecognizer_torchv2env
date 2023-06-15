@@ -112,7 +112,7 @@ def get_speaker_encoder(saved_model=""): #function to get encoder(model)
     if nhi_config.USE_TRANSFORMER:
         return TransformerSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
     else:
-        return LstmSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
+        return LstmSpeakerEncoder2(saved_model).to(nhi_config.DEVICE)
     
 class Singleton(type): #use singleton to get encoder(model) ONCE
     _instances = {}
@@ -126,10 +126,11 @@ class MyEncoder(metaclass=Singleton):
         if nhi_config.USE_TRANSFORMER == True:
             self.encoder = TransformerSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
         else:
-            self.encoder = LstmSpeakerEncoder(saved_model).to(nhi_config.DEVICE)
+            self.encoder = LstmSpeakerEncoder2(saved_model).to(nhi_config.DEVICE)
     
 
 if __name__ == "__main__":
     print(torch.cuda.is_available())
     
-    
+#     Finished evaluation in 1561.0991175174713 seconds
+# eer_threshold = 0.7010000000000005 eer = 0.0906

@@ -26,10 +26,10 @@ def read_audio(audio_dir):
 '''extract mfcc feature from an audio file, a frame = 512 samples'''
 def extract_mfcc(audio_dir):
     waveform, sample_rate = read_audio(audio_dir)
-    
-    #mfcc standard frame length = 512 samples
+
     features = librosa.feature.mfcc(y=waveform, sr=sample_rate, n_mfcc=nhi_config.N_MFCC)
     return features.transpose()
+
 
 '''Extract sliding windows from features, dùng cho sliding window inference'''
 def extract_sliding_windows(features):
@@ -71,7 +71,7 @@ class TrimmedTripletFeaturesFetcher:
                          trim_features(pos, nhi_config.SPECAUG_TRAINING),
                          trim_features(neg, nhi_config.SPECAUG_TRAINING)])
     
-def get_batched_triplet_input(spk_to_utts, batch_size, pool=None):
+def get_batched_triplet_input(spk_to_utts, batch_size, pool=None): #---input training
     """Get batched triplet input for PyTorch."""
     fetcher = TrimmedTripletFeaturesFetcher(spk_to_utts)
     if pool is None:
@@ -81,11 +81,18 @@ def get_batched_triplet_input(spk_to_utts, batch_size, pool=None):
     batch_input = torch.from_numpy(np.concatenate(input_arrays)).float()
     return batch_input
 
+#size input data (24x100x40) = [3xbatch_size] x [seqlength] x [n_mfcc]
 if __name__ == '__main__':
-    #test read file
-    temp = read_audio(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0000.flac")
-    print(temp[0].shape)
+#     #test read file
+#     myfile,sr=read_audio(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0001.flac")#sf.read(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0001.flac")
+#     print(pncc.pncc(myfile).shape)
+#     print(extract_mfcc(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0001.flac").shape)
+    # temp = read_audio(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0000.flac")
+    # print(temp[0].shape)
 
-    temp = extract_mfcc(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0000.flac")
-    print(temp.shape)
-    print(librosa.__version__)
+    # temp = extract_mfcc(r"D:\SpeechDataset\train\train-clean-100\39\121914\39-121914-0000.flac")
+    # print(temp.shape)
+    # print(librosa.__version__)
+    
+    spk_to_utts = data_prep.get_utterances_by_speakers(nhi_config.TRAIN_DATASET_DIR) 
+    print(get_batched_triplet_input(spk_to_utts, 8, pool=None).shape)
