@@ -128,22 +128,22 @@ def output_loss_json(aList):
     jsonFile.write(res)
     jsonFile.close()
 if __name__ == "__main__":
-    run_training()
-    # tempdir = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0004.flac"
-    # # tempdir=r"D:\DATN\myassistant\microphone-results2.flac"
-    # temp = features_extraction.extract_mfcc(tempdir)
-    # encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
-    # encoder = MyEncoder().encoder
+    # run_training()
+    tempdir = r"D:\SpeechDataset\test\LibriSpeech\test-clean\672\122797\672-122797-0004.flac"
+    # tempdir=r"D:\DATN\myassistant\microphone-results2.flac"
+    temp = features_extraction.extract_mfcc(tempdir)
+    encoder = get_speaker_encoder(nhi_config.SAVED_MODEL_PATH)
+    encoder = MyEncoder().encoder
 
-    # embedding_temp = my_inference(temp, encoder)
+    embedding_temp = my_inference(temp, encoder)
     
-    # tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\2830\3980\2830-3980-0008.flac"
-    # # tempdir2=r"D:\DATN\myassistant\microphone-results.flac"
-    # temp2 = features_extraction.extract_mfcc(tempdir2)
-    # embedding_temp2 = my_inference(temp2, encoder)
+    tempdir2 = r"D:\SpeechDataset\test\LibriSpeech\test-clean\2830\3980\2830-3980-0008.flac"
+
+    temp2 = features_extraction.extract_mfcc(tempdir2)
+    embedding_temp2 = my_inference(temp2, encoder)
     
     
-    # print(embedding_temp)
-    # print("shape: ", embedding_temp.shape)
-    # print("cos similarity: ", cosine_similarity(embedding_temp, embedding_temp2))
+    print(embedding_temp)
+    print("shape: ", embedding_temp.shape)
+    print("cos similarity: ", cosine_similarity(embedding_temp, embedding_temp2))
     

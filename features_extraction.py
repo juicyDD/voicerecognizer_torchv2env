@@ -10,6 +10,7 @@ import specaug
 
 '''read an arbitrary *.flac file, return waveform and sample rate'''
 def read_audio(audio_dir):
+  
     waveform, sample_rate = sf.read(audio_dir)
     
     #if number of channels of the target audio file is greater than 1

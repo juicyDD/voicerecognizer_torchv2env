@@ -29,12 +29,16 @@ def get_triplet(dict_speakers):
     neg_utterance = random.sample(dict_speakers[neg_speaker],1)[0]
     
     return (anchor_utterance, pos_utterance, neg_utterance)
-    
+
+
+
+
 
 if __name__ == '__main__':
     result = get_utterances_by_speakers(nhi_config.TRAIN_DATASET_DIR)
-    hihi = get_triplet(result)
-    print(hihi)
+    # get_neg_pos_dict(result,'8468')
+    # hihi = get_triplet(result)
+    # print(hihi)
     # for key in result.keys():
     #     print(key,": ",len(result[key]))
-    print()
+    # print(result)

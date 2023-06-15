@@ -97,7 +97,7 @@ def compute_scores(encoder, dict_speaker, num_eval_triplets=nhi_config.NUM_EVAL_
     print("Evaluated", len(labels)//2, "triplets in total")
     return (labels, scores)
 
-def run_eval():
+def run_eval(): #global threshold
     """Run evaluation of the saved model on test data."""
     start_time = time.time()
     
@@ -114,6 +114,8 @@ def run_eval():
     eval_time = time.time() - start_time
     print("Finished evaluation in", eval_time, "seconds")
     print("eer_threshold =", eer_threshold, "eer =", eer)
+
+
     
 if __name__ == "__main__":
     run_eval()
